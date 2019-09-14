@@ -1,0 +1,41 @@
+/* all elements */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* id selector */
+#container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 100%;
+}
+
+/* class selector */
+.header {
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+.header h1 {
+    margin: 0px;
+}
+
+.content {
+    width: 100%;
+    background-color: gray;
+}
+
+.post {
+    background-color: white;
+    margin: 0 auto;
+    max-width: 80%;
+    padding: 10px;
+    height: 500px;
+}
+
+.footer {
+    padding: 10px;
+    text-align: center;
+    background-color: #000;
+    color: white;
+}
