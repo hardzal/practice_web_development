@@ -38,7 +38,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
         </nav>
         <h1>Customer <?= $id; ?></h1>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <tr>
                 <th>OrderID</th>
                 <th>CustomerID</th>

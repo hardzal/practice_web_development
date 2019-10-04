@@ -1,0 +1,16 @@
+.footer {
+    background-color: #eee;
+    padding: 5px;
+    text-align: center;
+    color: black;
+}
+
+.jumbotron {
+    margin-bottom: 0px;
+}
+
+.post {
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+    padding: 20px
+}
