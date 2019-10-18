@@ -86,9 +86,9 @@ class Jurusan
         return false;
     }
 
-    public function cariJurusan($keyword)
+    public function cariJurusan($keyword, $search)
     {
-        $query = "SELECT * FROM jurusan WHERE nama LIKE '%keyword%' ORDER BY id ASC";
+        $query = "SELECT * FROM " . $this->table . " WHERE " . $keyword . " LIKE '%$search%' ORDER BY id ASC";
 
         $result = $this->mysqli->query($query) or die("ERROR :" . $this->mysqli->connect_error);
 
