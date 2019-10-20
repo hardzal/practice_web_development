@@ -43,8 +43,8 @@
                             </div>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <form method="GET" action="<?= SITE_URL; ?>index.php" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>
@@ -55,7 +55,11 @@
         <main>
             <div class="post">
                 <?php
-                $dataJurusan = $jurusan->tampilJurusan();
+                if ($keyword != null) {
+                    $dataJurusan = $jurusan->cariJurusan($keyword);
+                } else {
+                    $dataJurusan = $jurusan->tampilJurusan();
+                }
                 $no = 1;
                 if ($dataJurusan->num_rows == 0) :
                     echo "<div class='jumbotron'><p><strong>Data jurusan belum tersedia</strong></p></div>";

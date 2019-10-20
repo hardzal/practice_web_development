@@ -100,13 +100,19 @@ class Mahasiswa
 
     public function cariMahasiswa($keyword)
     {
-        $query = "SELECT * FROM mahasiswa 
+        $query = "SELECT mahasiswa.id AS id, 
+            mahasiswa.nim AS nim, 
+            mahasiswa.nama AS nama,
+            mahasiswa.email AS email,
+            mahasiswa.alamat AS alamat,
+            jurusan.nama AS jurusan 
+        FROM " . $this->table . " 
             INNER JOIN jurusan ON mahasiswa.id_jurusan = jurusan.id 
             WHERE mahasiswa.nama LIKE '%$keyword%' OR
                 mahasiswa.nim LIKE '%$keyword%' OR 
                 mahasiswa.email LIKE '%$keyword%' OR
                 jurusan.nama LIKE '%$keyword%' OR
-                mahasiswa.alamat LIKE '%$keyword%' OR
+                mahasiswa.alamat LIKE '%$keyword%'
             ORDER BY mahasiswa.nim ASC";
 
         $result = $this->mysqli->query($query) or die("ERROR :" . $this->mysqli->connect_error);

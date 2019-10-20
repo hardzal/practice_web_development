@@ -86,9 +86,10 @@ class Jurusan
         return false;
     }
 
-    public function cariJurusan($keyword, $search)
+    public function cariJurusan($search)
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE " . $keyword . " LIKE '%$search%' ORDER BY id ASC";
+        $query = "SELECT * FROM " . $this->table .
+            " WHERE nama LIKE '%$search%' OR deskripsi LIKE '%$search%' ORDER BY id ASC";
 
         $result = $this->mysqli->query($query) or die("ERROR :" . $this->mysqli->connect_error);
 

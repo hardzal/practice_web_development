@@ -1,11 +1,11 @@
 <?php
-
+include "config.php";
 class Database
 {
-    private $dbUsername = "root";
-    private $dbPassword = "";
-    private $dbName = "latihan_db_mahasiswa";
-    private $dbHost = "localhost";
+    private $dbUsername = DB_USERNAME;
+    private $dbPassword = DB_PASSWORD;
+    private $dbName = DB_NAME;
+    private $dbHost = DB_HOST;
 
     public function connect()
     {

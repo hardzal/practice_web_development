@@ -7,6 +7,12 @@ $db = new Database();
 $mahasiswa = new Mahasiswa($db->connect());
 $jurusan = new Jurusan($db->connect());
 
+$keyword = null;
+
+if (isset($_GET['keyword'])) {
+    $keyword = filter_var($_GET['keyword'], FILTER_SANITIZE_STRING);
+}
+
 if (!isset($_GET['page']) && empty($_GET['page'])) {
     require_once './views/mahasiswa/index.php';
 } else {
