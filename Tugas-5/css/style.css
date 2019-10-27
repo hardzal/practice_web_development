@@ -1,0 +1,30 @@
+a:link {
+    text-decoration: none;
+    color: black;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid #eee;
+}
+
+.blue {
+    background-color: darkblue;
+}
+
+.red {
+    background-color: darkred;
+}
+
+.tambah {
+    margin-top: 5px;
+    padding: 10px;
+    color: white;
+}
+
+.tambah:hover {
+    cursor: pointer;
+    font-weight: bolder;
+}
