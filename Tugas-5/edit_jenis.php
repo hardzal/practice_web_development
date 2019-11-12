@@ -1,6 +1,14 @@
 <?php
+if(!isset($_GET['id'])) header("Location: index.php");
 require('functions.php');
+
 isLoggedIn();
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$query = "SELECT * FROM jenis WHERE id = '$id'";
+
+$result = $koneksi->query($query);
+
+$data = $result->fetch_object();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,18 +36,18 @@ isLoggedIn();
             <p>
                 <h3>Menambah Data Jenis Film</h3>
             </p>
-            <?php if(isset($_POST['submit'])) insertKategoriFilm();?>
+            <?php if(isset($_POST['submit'])) updateJenisFilm($id);?>
             <form action="" method="POST">
                 <table>
                     <tr>
                         <td>Name</td>
                         <td>:</td>
-                        <td><input type='text' name='name' maxlength='20' required /></td>
+                        <td><input type='text' name='name' maxlength='20' required value="<?= $data->name;?>"/></td>
                     </tr>
                     <tr>
                         <td>Permalink</td>
                         <td>:</td>
-                        <td><input type='text' name='slug' maxlength='30' required /></td>
+                        <td><input type='text' name='slug' maxlength='30' required value="<?= $data->slug;?>"/></td>
                     </tr>
                     <tr>
                         <td colspan='3'><input type='submit' name='submit' /></td>

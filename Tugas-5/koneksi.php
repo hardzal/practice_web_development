@@ -1,12 +1,14 @@
 <?php
 
+session_start();
+
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$dbname = "latihan_db_toko_dvd";
+$dbname = "latihan_db_toko_dvdv2";
 
-$koneksi = mysqli_connect($hostname, $username, $password, $dbname);
+$koneksi = new mysqli($hostname, $username, $password, $dbname);
 
 if(!$koneksi) {
-    die("Error: ". mysqli_error($koneksi));
+    die("Error: ". $koneksi->error());
 }

@@ -1,6 +1,8 @@
 <?php
 if (!isset($_GET['id'])) header("Location: index.php");
-require('koneksi.php');
+require('functions.php');
+
+isLoggedIn();
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
@@ -9,8 +11,8 @@ FROM dvd AS d
 LEFT JOIN jenis AS j
 WHERE d.id = '$id'";
 
-$result = mysqli_query($koneksi, $query);
-$data = mysqli_fetch_object($result);
+$result = $koneksi->query($query);
+$data = $result->fetch_object();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +22,7 @@ $data = mysqli_fetch_object($result);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Toko film serba ada | Tambah data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href='./css/style.css' rel='stylesheet' type='text/css' />
 </head>
 
@@ -33,7 +36,7 @@ $data = mysqli_fetch_object($result);
         <section>
             <h2>Selamat datang! di Toko Film Serba ada</h2>
             <hr /><br />
-            <a href='index.php' class='tambah red'>Home</a>
+            <a href='index.php' class="btn btn-primary">Home</a> || <a href='logout.php' class='btn btn-danger'>Logout</a>
             <p>
                 <h3>Menambah Data Film</h3>
             </p>
@@ -54,11 +57,11 @@ $data = mysqli_fetch_object($result);
                         <td>:</td>
                         <td> <?php
                                 $query_jenis = "SELECT * FROM jenis";
-                                $result_jenis = mysqli_query($koneksi, $query_jenis);
+                                $result_jenis = $koneksi->query($query_jenis);
                                 ?>
                             <select name='jenis'>
                                 <?php
-                                while ($jenis = mysqli_fetch_object($result_jenis)) {
+                                while ($jenis = $result->num_rows) {
                                     if ($jenis->id == $data->id_film) $selected = "selected";
                                     else $selected = "";
 
