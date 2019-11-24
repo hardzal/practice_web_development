@@ -49,13 +49,13 @@ function authenticate()
 
 function logout()
 {
-	global $connect;
 	unset($_SESSION['user_id']);
 	unset($_SESSION['username']);
 }
 
-function uploadGambar($img_name) {
-	if(isset($_FILES['img']['tmp_name']) && !empty($_FILES['img']['tmp_name'])) {
+function uploadGambar($img_name = null)
+{
+	if (isset($_FILES['img']['tmp_name']) && !empty($_FILES['img']['tmp_name'])) {
 		$name = $_FILES['img']['name'];
 		$size = $_FILES['img']['size'];
 		$type = $_FILES['img']['type'];
@@ -64,25 +64,29 @@ function uploadGambar($img_name) {
 
 		$destination = "img/";
 
-		if(!$error) {
-			if(file_exists($destination.$img_name)) {
-				unlink($destination.$img_name);
+		if (!$error) {
+			if ($img_name != 'default-image.jpg') {
+				if (file_exists($destination . $img_name)) {
+					unlink($destination . $img_name);
+				}
 			}
-			move_uploaded_file($tmp, $destination.$name);
+
+			move_uploaded_file($tmp, $destination . $name);
 
 			return $name;
 		} else {
-		echo "<script>
+			echo "<script>
 			alert(`Terdapat error! {$error}`);
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 		}
 	} else {
 		return 'default-image.jpg';
 	}
 }
 
-function insertFilm() {
+function insertFilm()
+{
 	global $koneksi;
 	$judul = filter_input(INPUT_POST, 'judul', FILTER_SANITIZE_STRING);
 	$id_jenis = filter_input(INPUT_POST, 'id_jenis', FILTER_SANITIZE_NUMBER_INT);
@@ -98,20 +102,21 @@ function insertFilm() {
 
 	$result = $koneksi->query($query);
 
-	if($result) {
+	if ($result) {
 		echo "<script>
 			alert('Berhasil menambahkan data film');
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 	} else {
 		echo "<script>
 			alert('Gagal menambahkan data film');
 			window.location.href = 'tambah.php';
-		</script>";	
+		</script>";
 	}
 }
 
-function insertKategoriFilm() {
+function insertKategoriFilm()
+{
 	global $koneksi;
 	$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
 	$slug = filter_input(INPUT_POST, 'slug', FILTER_SANITIZE_STRING);
@@ -120,20 +125,21 @@ function insertKategoriFilm() {
 
 	$result = $koneksi->query($query);
 
-	if($result) {
+	if ($result) {
 		echo "<script>
 			alert('Berhasil menambahkan data kategori film');
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 	} else {
 		echo "<script>
 			alert('Gagal menambahkan data kategori film');
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 	}
 }
 
-function updateFilm($id) {
+function updateFilm($id)
+{
 	global $koneksi;
 	$judul = filter_input(INPUT_POST, 'judul', FILTER_SANITIZE_STRING);
 	$id_jenis = filter_input(INPUT_POST, 'id_jenis', FILTER_SANITIZE_NUMBER_INT);
@@ -143,34 +149,34 @@ function updateFilm($id) {
 	$tahun = filter_input(INPUT_POST, 'tahun', FILTER_SANITIZE_NUMBER_INT);
 	$sinopsis = filter_input(INPUT_POST, 'sinopsis', FILTER_SANITIZE_STRING);
 	$img_name = filter_input(INPUT_POST, 'img_name', FILTER_SANITIZE_STRING);
-	
-	$img_new = uploadGambar($img_name);
-	
 
-	if($img_name == 'default-image.jpg') {
+	$img_new = uploadGambar($img_name);
+
+	if ($img_name == 'default-image.jpg') {
 		$img_new = $img_name;
 	}
 
 	$img = "img = '$img_new',";
 
-	$query = "UPDATE dvd SET id_jenis = '$id_jenis', judul = '$judul', sinopsis = '$sinopsis', ". $img ." sutradara =  '$sutradara', pemain_utama = '$pemain', harga = '$harga', thn_terbit = '$tahun', updated_at = now()";
+	$query = "UPDATE dvd SET id_jenis = '$id_jenis', judul = '$judul', sinopsis = '$sinopsis', " . $img . " sutradara =  '$sutradara', pemain_utama = '$pemain', harga = '$harga', thn_terbit = '$tahun', updated_at = now() WHERE id = '$id'";
 
 	$result = $koneksi->query($query);
 
-	if($result) {
+	if ($result) {
 		echo "<script>
 			alert('Berhasil memperbaharui data film');
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 	} else {
 		echo "<script>
 			alert('Gagal memperbaharui data film');
 			window.location.href = 'tambah.php';
-		</script>";	
+		</script>";
 	}
 }
 
-function updateJenisFilm($id) {
+function updateJenisFilm($id)
+{
 	global $koneksi;
 	$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
 	$slug = filter_input(INPUT_POST, 'slug', FILTER_SANITIZE_STRING);
@@ -178,15 +184,15 @@ function updateJenisFilm($id) {
 
 	$result = $koneksi->query($query);
 
-	if($result) {
+	if ($result) {
 		echo "<script>
 			alert('Berhasil memperbaharui data kategori film');
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 	} else {
 		echo "<script>
 			alert('Gagal memperbaharui data kategori film');
 			window.location.href = 'index.php';
-		</script>";	
+		</script>";
 	}
 }

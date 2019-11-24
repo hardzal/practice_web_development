@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('functions.php');
 isLoggedIn();
 ?>
@@ -20,23 +20,23 @@ isLoggedIn();
             <div class='header'>
                 <h1>Toko film serba ada</h1>
             </div>
-            <?php if(isset($_GET['pesan'])) : ?>
-                <p class='alert alert-success'><?= strip_tags(htmlentities($_GET['pesan']));?></p>  
-            <?php endif;?>
+            <?php if (isset($_GET['pesan'])) : ?>
+                <p class='alert alert-success'><?= strip_tags(htmlentities($_GET['pesan'])); ?></p>
+            <?php endif; ?>
         </header>
         <section>
             <h2>Selamat datang! di Toko Film Serba ada</h2>
             <hr /><br />
             <div class='operasi'>
                 <a href='tambah_film.php' class='btn btn-primary'>Tambah Data Film</a> || <a href='tambah_jenis.php' class='btn btn-success'>
-                Tambah jenis film</a> || <a href='logout.php' class='btn btn-danger'>Logout</a>
+                    Tambah jenis film</a> || <a href='logout.php' class='btn btn-danger'>Logout</a>
             </div>
             <p>
                 <h3>Pilih kategori film yang anda cari</h3>
             </p>
             <?php
             // memilih jenis film yang unik
-            $query = "SELECT jenis.id, jenis.name, jenis.slug, (SELECT id_jenis FROM dvd WHERE id_jenis = jenis.id) AS total FROM jenis LEFT JOIN dvd ON dvd.id_jenis=jenis.id";
+            $query = "SELECT jenis.*, COUNT(dvd.id_jenis) as total FROM jenis LEFT JOIN dvd ON jenis.id=dvd.id_jenis GROUP BY jenis.id ORDER BY total DESC";
             $result = $koneksi->query($query);
             $no = 1;
             if ($result->num_rows > 0) :
@@ -45,20 +45,20 @@ isLoggedIn();
                     <tr>
                         <th>#</th>
                         <th>Nama</th>
-                        <th>Total</th>   
+                        <th>Total</th>
                         <th>Action</th>
                     </tr>
                     <?php while ($data = $result->fetch_object()) : ?>
-                    <tr>
-                        <td><?= $no++;?></td>
-                        <td><a href='jenis.php?jenis=<?= $data->slug; ?>'><?= $data->name; ?></a></td>
-                        <td><?= isset($data->total) ? $data->total : 0 ;?></td>
-                        <td>
-                            <a href='jenis.php?jenis=<?= $data->slug; ?>' class='btn btn-success mr-3'>lihat dvd</a>
-                            <a href='edit_jenis.php?id=<?= $data->id;?>' class='btn btn-primary mr-3'>edit</a>  
-                            <a href='hapus_jenis.php?id=<?= $data->id;?>' class='btn btn-danger' onclick='return confirm("Apakah kamu ingin menghapus ini?");'>hapus</a>
-                        </td> 
-                    </tr>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><a href='jenis.php?jenis=<?= $data->slug; ?>'><?= $data->name; ?></a></td>
+                            <td><?= isset($data->total) ? $data->total : 0; ?></td>
+                            <td>
+                                <a href='jenis.php?jenis=<?= $data->slug; ?>' class='btn btn-success mr-3'>lihat dvd</a>
+                                <a href='edit_jenis.php?id=<?= $data->id; ?>' class='btn btn-primary mr-3'>edit</a>
+                                <a href='hapus_jenis.php?id=<?= $data->id; ?>' class='btn btn-danger' onclick='return confirm("Apakah kamu ingin menghapus ini?");'>hapus</a>
+                            </td>
+                        </tr>
                     <?php endwhile; ?>
                 </table>
             <?php else : ?>
